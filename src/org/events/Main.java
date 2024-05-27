@@ -57,8 +57,11 @@ public class Main {
                     cancel(scanner, event);
                     break;
                 //esco se non premo 1 o 2
-                default:
+                case "3":
                     run = false;
+                    break;
+                default:
+                    System.out.println("Input non valido");
                     break;
             }
         }
