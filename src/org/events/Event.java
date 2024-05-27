@@ -35,7 +35,7 @@ public class Event {
     //validare la data
     private LocalDate getValidDate(LocalDate date) throws EventException{
         if (date == null || date.isBefore(LocalDate.now())) {
-            throw new EventException("Invalid date");
+            throw new EventException("La data non è valida: " + date + ". La data non può essere già passata");
         }
         return date;
     }
@@ -43,7 +43,8 @@ public class Event {
     //validare il titolo
     private String getValidTitle(String title) throws EventException{
         if (title == null || title.isEmpty()) {
-            throw new EventException("Invalid title");
+            throw new EventException("Il titolo non è valido: " + title + "Il titolo è obbligatorio");
+
         }
         return title;
     }
@@ -51,7 +52,7 @@ public class Event {
     //validare i posti totali
     private int getValidSeatingCapacity(int seatingCapacity) throws EventException{
         if (seatingCapacity <= 0) {
-            throw new EventException("Invalid seating capacity");
+            throw new EventException("La capienza della location non è valida: " + seatingCapacity + ". Deve essere un numero positivo");
         }
         return seatingCapacity;
     }
@@ -59,7 +60,7 @@ public class Event {
     //validare i posti da prenotare
     private int getValidSeatsBooked(int bookedSeats) throws EventException{
         if (bookedSeats <= 0) {
-            throw new EventException("Invalid number of seats to book");
+            throw new EventException("Numero di posti da prenotare non valido: " + bookedSeats + ". Deve essere un numero positivo, minore della capienza");
         }
         return bookedSeats;
     }
@@ -69,7 +70,7 @@ public class Event {
     public void book(int seatsToBook) throws EventException{
         getValidSeatsBooked(seatsToBook);
         if ( seatsToBook > seatingCapacity) {
-            throw new EventException("The number of booked seats is greater than the seating capacity");
+            throw new EventException("Il numero di posti prenotati è maggiore della capienza della location");
         }
         this.bookedSeats += seatsToBook;
 
@@ -80,11 +81,15 @@ public class Event {
     public void cancel(int seatsToCancel) throws EventException {
         getValidSeatsBooked(seatsToCancel);
         if (seatsToCancel > seatingCapacity ) {
-            throw new EventException("The number of seats to cancel is greater than the seating capacity");
+            throw new EventException("Il numero dei posti da cancellare è maggiore della capienza della location");
         } else if (seatsToCancel > this.bookedSeats) {
-            throw new EventException("The number of seats to cancel is greater than the number of seats booked");
+            throw new EventException("Il numero dei posti da cancellare è maggiore della quantità dei posti prenotati");
         }
         this.bookedSeats -= seatsToCancel;
+    }
+
+    public int getAvailableSeats() {
+        return this.seatingCapacity - this.bookedSeats;
     }
 
 
@@ -101,7 +106,7 @@ public class Event {
 
     //data
     public String getDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ITALIAN);
         return date.format(formatter);
     }
 
