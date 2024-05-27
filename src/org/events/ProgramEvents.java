@@ -15,8 +15,8 @@ public class ProgramEvents {
     private ArrayList<Event> events = new ArrayList<>();
 
     //costruttore
-    public ProgramEvents(String title) {
-        this.title = title;
+    public ProgramEvents(String title) throws EventException{
+        this.title = getValidTitle(title);
     }
 
     //metodi
@@ -43,9 +43,8 @@ public class ProgramEvents {
         events.clear();
     }
 
-    private ArrayList sortEvents(ArrayList list) {
+    private void sortEvents(ArrayList list) {
         Collections.sort(events, Comparator.comparing(Event::getDate));
-        return list;
     }
 
 
@@ -67,7 +66,6 @@ public class ProgramEvents {
                 String event = e.toString();
                 string += event + "; ";
             }
-            System.out.println(string);
             return string;
         }
 
@@ -76,7 +74,7 @@ public class ProgramEvents {
     @Override
     public String toString() {
         if (events.isEmpty()) {
-            return "Non sono presenti eventi in programma";
+            return "Non sono presenti eventi nel programma " + title;
         }
         sortEvents(events);
         String string =  title + " - I nostri eventi: ";
@@ -97,5 +95,9 @@ public class ProgramEvents {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public ArrayList<Event> getEvents() {
+        return events;
     }
 }
