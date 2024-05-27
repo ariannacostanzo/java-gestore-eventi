@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class Event {
+public class Event{
 
     //attributi
     private String title;
@@ -29,7 +29,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return getDate() + " - " + title;
+        return getFormattedDate() + " - " + title;
     }
 
     //validare la data
@@ -43,7 +43,7 @@ public class Event {
     //validare il titolo
     private String getValidTitle(String title) throws EventException{
         if (title == null || title.isEmpty()) {
-            throw new EventException("Il titolo non è valido: " + title + "Il titolo è obbligatorio");
+            throw new EventException("Il titolo è obbligatorio");
 
         }
         return title;
@@ -92,6 +92,10 @@ public class Event {
         return this.seatingCapacity - this.bookedSeats;
     }
 
+    public String getFormattedDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ITALIAN);
+        return date.format(formatter);
+    }
 
     //getter e setter
 
@@ -105,9 +109,8 @@ public class Event {
     }
 
     //data
-    public String getDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ITALIAN);
-        return date.format(formatter);
+    public LocalDate getDate() {
+        return date;
     }
 
     public void setDate(LocalDate date) throws EventException{
@@ -123,6 +126,7 @@ public class Event {
     public int getBookedSeats() {
         return bookedSeats;
     }
+
 
 
 }

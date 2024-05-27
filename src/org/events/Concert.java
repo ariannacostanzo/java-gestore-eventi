@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class Concert extends Event{
+public class Concert extends Event {
 
     //attributi
     private LocalTime hour;
@@ -34,7 +34,7 @@ public class Concert extends Event{
 
     @Override
     public String toString() {
-        return String.format("%s, %s - %s - %s", this.getDate(), this.getFormattedTime(), this.getTitle(), this.getFormattedPrice());
+        return String.format("%s, %s - %s - %s", this.getFormattedDate(), this.getFormattedTime(), this.getTitle(), this.getFormattedPrice());
     }
 
     //validare il prezzo
